@@ -1,0 +1,70 @@
+<div class="header-menu-div">
+  <app-header-menu></app-header-menu>
+</div>
+
+<div class="main-wrapper">
+
+  <div *ngIf="status == DocusignStatus.NOT_SENT" class="content-box">
+    <h1>Procedi alla firma digitale</h1>
+    <p>
+      Clicca sul pulsante qui sotto per generare il link per la firma elettronica del contratto.
+    </p>
+
+    <button *ngIf="!isLoading && !signatureLink" (click)="generateSignatureLink()" class="btn-primary">
+      Genera link per la firma
+    </button>
+
+    <div *ngIf="isLoading" class="loading-spinner">
+      <i class="fa fa-spinner fa-spin"></i> Caricamento in corso...
+    </div>
+
+    <div *ngIf="signatureLink">
+      <p>Firma il contratto al seguente link:</p>
+      <a [href]="signatureLink" class="btn-primary">
+        Firma il contratto
+      </a>
+    </div>
+  </div>
+
+  <div *ngIf="status == DocusignStatus.SENT" class="content-box">
+    <h1>Procedi alla firma digitale</h1>
+    <p>
+      Clicca sul pulsante qui sotto per generare il link per la firma elettronica del contratto.
+    </p>
+    
+    <button *ngIf="!isLoading && !signatureLink" (click)="regenerateSignatureLink()" class="btn-primary">
+      Genera link per la firma
+    </button>
+
+    <div *ngIf="isLoading" class="loading-spinner">
+      <i class="fa fa-spinner fa-spin"></i> Caricamento in corso...
+    </div>
+
+    <div *ngIf="signatureLink">
+      <p>Firma il contratto al seguente link:</p>
+      <a [href]="signatureLink" class="btn-primary">
+        Firma il contratto
+      </a>
+    </div>
+  </div>
+
+  <!-- <div *ngIf="status == DocusignStatus.POLLING" class="content-box">
+    <div *ngIf="true" class="loading-spinner">
+      <p class="message-text">
+        La tua firma è in fase di elaborazione. Stiamo aspettando che il sistema aggiorni lo stato. Se non hai completato la procedura, attendi qualche momento per il caricamento dei dati.
+      </p>
+      <i class="fa fa-spinner fa-spin"></i> Caricamento in corso...
+    </div>
+  </div> -->
+
+  <div *ngIf="status == DocusignStatus.SIGNED" class="content-box">
+    <h1>Firma completata</h1>
+    <p>
+      La firma del contratto è stata completata con successo.
+      Ora puoi procedere con il pagamento.
+    </p>
+    <button (click)="startSubscriptionProcess()" class="btn-primary">
+      Procedi al pagamento
+    </button>
+  </div>
+</div>
